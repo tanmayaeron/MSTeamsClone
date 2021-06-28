@@ -1,16 +1,25 @@
 const socket = io('/')
 const videoGrid = document.getElementById('video-grid')
 const timeDisplay = document.querySelector('.control-left')
+const mic = document.getElementById('mic')
+const video = document.getElementById('video')
+const caption = document.getElementById('caption')
+const screenShare = document.getElementById('screenshare')
+const endCall = document.getElementById('call_end')
+
 
 const myPeer = new Peer()
 const myVideo = document.createElement('video')
 myVideo.muted = true
 const peers = {}
 
+let myVideoStream;
+
 navigator.mediaDevices.getUserMedia({
   video: true,
   audio: true
 }).then(stream => {
+  myVideoStream = stream
   addVideoStream(myVideo, stream)
 
   myPeer.on('call', call => {
@@ -37,6 +46,28 @@ myPeer.on('open', id => {
   socket.emit('join-room', ROOM_ID, id)
 })
 
+mic.addEventListener('click',()=>{
+  let enabled = myVideoStream.getAudioTracks()[0].enabled
+  if(enabled) {
+    myVideoStream.getAudioTracks()[0].enabled = false
+    setUnmuteButton()
+  } else {
+    myVideoStream.getAudioTracks()[0].enabled = true
+    setmuteButton()
+  }
+})
+
+video.addEventListener('click',()=>{
+  let enabled = myVideoStream.getVideoTracks()[0].enabled
+  if(enabled){
+    myVideoStream.getVideoTracks()[0].enabled = false
+    setPlayVideo()
+  } else {
+    myVideoStream.getVideoTracks()[0].enabled = true
+    setStopVideo()
+  }
+})
+
 function connectToNewUser(userId, stream) {
   const call = myPeer.call(userId, stream)
   const video = document.createElement('video')
@@ -49,7 +80,6 @@ function connectToNewUser(userId, stream) {
 
   peers[userId] = call
 }
-
 
 function addVideoStream(video, stream) {
   video.srcObject = stream
@@ -84,3 +114,27 @@ function showTime(){
 }
 
 showTime()
+
+function setUnmuteButton() {
+  const html = `<i class="material-icons">mic_off</i>`
+  mic.style.backgroundColor = "red"
+  mic.innerHTML = html
+}
+
+function setmuteButton() {
+  const html = `<i class="material-icons">mic</i>`
+  mic.style.backgroundColor = "rgb(31, 30, 30)"
+  mic.innerHTML = html
+}
+
+function setPlayVideo() {
+  const html = `<i class="material-icons">videocam_off</i>`
+  video.style.backgroundColor = "red"
+  video.innerHTML = html
+}
+
+function setStopVideo() {
+  const html = `<i class="material-icons">videocam</i>`
+  video.style.backgroundColor = "rgb(31, 30, 30)"
+  video.innerHTML = html
+}
