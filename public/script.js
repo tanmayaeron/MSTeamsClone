@@ -1,9 +1,12 @@
 const socket = io('/')
 const videoGrid = document.getElementById('video-grid')
+const timeDisplay = document.querySelector('.control-left')
+
 const myPeer = new Peer()
 const myVideo = document.createElement('video')
 myVideo.muted = true
 const peers = {}
+
 navigator.mediaDevices.getUserMedia({
   video: true,
   audio: true
@@ -47,6 +50,7 @@ function connectToNewUser(userId, stream) {
   peers[userId] = call
 }
 
+
 function addVideoStream(video, stream) {
   video.srcObject = stream
   video.addEventListener('loadedmetadata', () => {
@@ -54,3 +58,29 @@ function addVideoStream(video, stream) {
   })
   videoGrid.append(video)
 }
+
+function showTime(){
+  var date = new Date()
+  var h = date.getHours()
+  var m = date.getMinutes() 
+  var s = date.getSeconds()
+  var session = "AM";
+    
+  if(h == 0){
+      h = 12;
+  }
+    
+  if(h > 12){
+      h = h - 12;
+      session = "PM"
+  }
+    
+  h = (h < 10) ? "0" + h : h
+  m = (m < 10) ? "0" + m : m
+    
+  var time = h + ":" + m + " " + session
+  timeDisplay.innerHTML = time
+  setTimeout(showTime,1000)
+}
+
+showTime()
