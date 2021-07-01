@@ -1,4 +1,7 @@
 const socket = io('/')
+
+const myName = prompt("Enter your name")
+
 const videoGrid = document.getElementById('video-grid')
 const timeDisplay = document.querySelector('.control-left')
 const mic = document.getElementById('mic')
@@ -6,12 +9,18 @@ const video = document.getElementById('video')
 const caption = document.getElementById('caption')
 const screenShare = document.getElementById('screenshare')
 const endCall = document.getElementById('call_end')
+const people = document.getElementById('participants')
 
+const myNameDisplay = document.createElement("div")
+myNameDisplay.innerHTML = myName
+people.append(myNameDisplay)
 
+let myId;
 const myPeer = new Peer()
 const myVideo = document.createElement('video')
 myVideo.muted = true
 const peers = {}
+const users = {}
 
 let myVideoStream;
 
@@ -22,6 +31,24 @@ navigator.mediaDevices.getUserMedia({
   myVideoStream = stream
   addVideoStream(myVideo, stream)
 
+  myPeer.on('connection', conn=>{
+
+    conn.on('open', function() {
+
+      // Receive data
+      conn.on('data', function(data) {
+        users[data.userId] = data.userName
+        const nameDisplay = document.createElement("div")
+        nameDisplay.innerHTML = data.userName
+        people.append(nameDisplay)
+      })
+
+      //send data
+      conn.send({userId:myId,userName:myName})
+    })
+
+  })
+  
   myPeer.on('call', call => {
     call.answer(stream)
     const video = document.createElement('video')
@@ -43,6 +70,7 @@ socket.on('user-disconnected', userId => {
 })
 
 myPeer.on('open', id => {
+  myId = id
   socket.emit('join-room', ROOM_ID, id)
 })
 
@@ -69,6 +97,22 @@ video.addEventListener('click',()=>{
 })
 
 function connectToNewUser(userId, stream) {
+  const conn = myPeer.connect(userId)
+
+  conn.on('open', function() {
+    
+    //recive data
+    conn.on('data', function(data) {
+      users[data.userId] = data.userName
+      const nameDisplay = document.createElement("div")
+      nameDisplay.innerHTML = data.userName
+      people.append(nameDisplay)
+    })
+    
+    //send data
+    conn.send({userId:myId,userName:myName})
+  })
+  
   const call = myPeer.call(userId, stream)
   const video = document.createElement('video')
   call.on('stream', userVideoStream => {
