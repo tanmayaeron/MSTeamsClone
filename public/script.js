@@ -9,7 +9,14 @@ const video = document.getElementById('video')
 const caption = document.getElementById('caption')
 const screenShare = document.getElementById('screenshare')
 const endCall = document.getElementById('call_end')
+const peopleButton = document.getElementById('people_btn')
+const msgButton = document.getElementById('msg_btn')
+const peopleBlock = document.getElementById('people-block')
+const msgBlock = document.getElementById('msg-block')
 const people = document.getElementById('participants')
+
+let peopleDisplay = false
+let msgDisplay = false
 
 const myNameDisplay = document.createElement("div")
 myNameDisplay.innerHTML = myName
@@ -94,6 +101,30 @@ video.addEventListener('click',()=>{
   } else {
     myVideoStream.getVideoTracks()[0].enabled = true
     setStopVideo()
+  }
+})
+
+peopleButton.addEventListener('click',()=>{
+  msgBlock.style.display = 'none'
+  if(peopleDisplay==false){
+    peopleBlock.style.display = 'flex'
+    peopleDisplay = true
+    msgDisplay = false
+  } else {
+    peopleBlock.style.display = 'none'
+    peopleDisplay = false
+  }
+})
+
+msgButton.addEventListener('click',()=>{
+  peopleBlock.style.display = 'none'
+  if(msgDisplay==false){
+    msgBlock.style.display = 'flex'
+    msgDisplay = true
+    peopleDisplay = false
+  } else {
+    msgBlock.style.display = 'none'
+    msgDisplay = false
   }
 })
 

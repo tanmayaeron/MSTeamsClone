@@ -8,18 +8,26 @@
   height: 10vh;
 }
 
+.topbar {
+  height: 100%;
+}
+
 .main__center {
   display: flex;
   height: 80vh;
+  background-color: black;
 }
 
 .main__bottom {
   height: 10vh;
   padding: 0 2%;
-  background-color: rgb(143, 143, 143);
+  background-color: black;
   align-items: center;
 }
 
+.control-left{
+  color: white;
+}
 .control-btn{
   background-color: rgb(31, 30, 30);
 }
@@ -45,19 +53,34 @@
   width: 25vw;
   min-width: 25vw;
   display: none;
+  flex-direction: column;
   background-color: white;
+  border: 2px solid white;
+  border-radius: 3%;
+  padding: 1%;
 }
 
-#participants {
+#people-block {
   width: 25vw;
-  display: flex;
+  min-width: 25vw;
+  display: none;
+  flex-direction: column;
   background-color: white;
+  border: 2px solid white;
+  border-radius: 3%;
+  padding: 1%;
 }
 
 .btn-round{
   border: 2px solid white;
   justify-content: center;
   border-radius: 49%;
+}
+
+.heading{
+  font: bold;
+  font-size: large;
+  font-family: cursive;
 }
   
 video {
