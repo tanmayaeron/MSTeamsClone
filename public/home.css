@@ -1,0 +1,39 @@
+.main {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+h1 {
+    color: rgb(86, 54, 231);
+}
+
+.topbar {
+    height: 100%;
+}
+
+.main__top {
+    height: 10vh;
+}
+
+.main__bottom {
+    height: 90vh;
+    display: flex;
+}
+
+.main-left {
+    display: flex;
+    width: 60vw;
+}
+
+.main-right {
+    display: flex;
+    width: 40vw;
+    margin: auto;
+    flex-direction: column;
+    padding: 5%;
+}
+
+.form-group {
+    margin: 1%;
+}

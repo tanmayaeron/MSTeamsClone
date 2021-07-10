@@ -1,0 +1,56 @@
+.main {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+h1 {
+    color: rgb(86, 54, 231);
+}
+
+
+.topbar {
+    height: 100%;
+}
+
+.main__top {
+    height: 10vh;
+    min-height: 10vh;
+}
+
+.main-center {
+    height: 10vh;
+    min-height: 10vh;
+    display: flex;
+    margin: auto;
+    padding: 1% 1%;
+}
+
+.main__bottom {
+    height: 80vh;
+    min-height: 80vh;
+    display: flex;
+}
+
+.main-left {
+    display: flex;
+    width: 30vw;
+    min-width: 30vw;
+    border: 2px solid black;
+}
+
+.head {
+    margin: 0 auto;
+}
+
+.main-right {
+    display: flex;
+    height: 100%;
+    margin: auto;
+    width: 70vw;
+    min-width: 70vw;
+    flex-direction: column;
+    padding: 5%;
+    border: 2px solid black;
+}
+
