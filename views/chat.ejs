@@ -54,18 +54,10 @@
             </nav>
         </div>
         <div class="main-center">
-            <form action="\chat" method="POST">
-                <input type="text" name="roomId" id="room-id" placeholder="Enter room-id" required>
-                <input type="hidden" name="name" value="<%=name%>">
-                <input type="hidden" name="email" value="<%=email%>">
-                <button type="submit" class="btn btn-primary" id="join-room-btn">Join Room</button>
-            </form>
-            <form action="\chat" method="POST">
-                <input type="text" name="roomName" id="roomName"  placeholder="Enter room name" required>
-                <input type="hidden" name="name" value="<%=name%>">
-                <input type="hidden" name="email" value="<%=email%>">
-                <button type="submit" class="btn btn-primary" id="create-room-btn">Create new Room</button>
-            </form>
+            <input type="text" name="roomId" id="room-id" placeholder="Enter room-id" required>
+            <button type="submit" class="btn btn-primary" id="join-room-btn" onclick="joinRoom()">Join Room</button>
+            <input type="text" name="roomName" id="roomName"  placeholder="Enter room name" required>
+            <button type="submit" class="btn btn-primary" id="create-room-btn" onclick="createRoom()">Create new Room</button>
         </div>
         <div class="main__bottom">
             <div class="main-left">
