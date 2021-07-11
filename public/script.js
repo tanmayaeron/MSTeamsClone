@@ -14,6 +14,9 @@ const msgButton = document.getElementById('msg_btn')
 const peopleBlock = document.getElementById('people-block')
 const msgBlock = document.getElementById('msg-block')
 const people = document.getElementById('participants')
+const msgGroup  = document.getElementById('msgs')
+const chatForm = document.getElementById('chat-form')
+
 
 let peopleDisplay = false
 let msgDisplay = false
@@ -71,6 +74,10 @@ navigator.mediaDevices.getUserMedia({
   socket.on('user-connected', userId => {
     connectToNewUser(userId, stream)
   })
+
+  socket.on('recieve-msg',data =>{
+    addMessage(data)
+  })
 })
 
 socket.on('user-disconnected', userId => {
@@ -125,7 +132,70 @@ msgButton.addEventListener('click',()=>{
   } else {
     msgBlock.style.display = 'none'
     msgDisplay = false
-  }
+   }
+})
+
+//message part
+// // input value
+// let text = $("input")
+// // // when press enter send message
+// $('html').keydown(function(e) {
+//     if (e.which == 13 && text.val().length !== 0) {
+//       // const msg = document.createElement("div")
+//       // msg.classList = "msg"
+//       // const name = document.createElement("div")
+//       // name.classList = "name"
+//       // name.innerHTML = "You"
+//       // const msgText = document.createElement("div")
+//       // msgText.classList = "text"
+//       // msgText.innerHTML = text
+//       // msg.append(name)
+//       // msg.append(msgText)
+//       // msgGroup.append(msg)
+//       socket.emit('send-msg',{userName:myName,msg:text})
+//       text.val('')
+//     }
+// });
+
+// sendMsg.addEventListener('click',()=>{
+//   const text = msgInput.nodeValue
+//   if(text){
+//     const msg = document.createElement("div")
+//     msg.classList = "msg"
+//     const name = document.createElement("div")
+//     name.classList = "name"
+//     name.innerHTML = "You"
+//     const msgText = document.createElement("div")
+//     msgText.classList = "text"
+//     msgText.innerHTML = text
+//     msg.append(name)
+//     msg.append(msgText)
+//     socket.emit('send-msg',{userName:myName,msg:text})
+//   }
+// })
+
+chatForm.addEventListener('submit', e => {
+  e.preventDefault();
+
+  //get message text
+  const msg = e.target.elements.msg.value;
+  const msgB = document.createElement("div")
+  msgB.classList = "msg"
+  const name = document.createElement("div")
+  name.classList = "name"
+  name.innerHTML = "You"
+  const msgText = document.createElement("div")
+  msgText.classList = "text"
+  msgText.innerHTML = msg
+  msgB.append(name)
+  msgB.append(msgText)
+  msgGroup.append(msgB)
+  //emit message to server
+  socket.emit('send-msg', {userName:myName,msg});
+
+  //clear input
+  e.target.elements.msg.value = '';
+  e.target.elements.msg.focus();
 })
 
 function connectToNewUser(userId, stream) {
@@ -155,6 +225,20 @@ function connectToNewUser(userId, stream) {
   })
 
   peers[userId] = call
+}
+
+function addMessage(data) {
+  const msg = document.createElement("div")
+  msg.classList = "msg"
+  const name = document.createElement("div")
+  name.classList = "name"
+  name.innerHTML = data.userName
+  const msgText = document.createElement("div")
+  msgText.classList = "text"
+  msgText.innerHTML = data.msg
+  msg.append(name)
+  msg.append(msgText)
+  msgGroup.append(msg)
 }
 
 function addVideoStream(video, stream) {
