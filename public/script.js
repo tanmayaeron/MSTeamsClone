@@ -1,6 +1,5 @@
 const socket = io('/')
 
-const myName = prompt("Enter your name")
 
 const videoGrid = document.getElementById('video-grid')
 const timeDisplay = document.querySelector('.control-left')
@@ -283,7 +282,7 @@ function setUnmuteButton() {
 
 function setmuteButton() {
   const html = `<i class="material-icons">mic</i>`
-  mic.style.backgroundColor = "rgb(31, 30, 30)"
+  mic.style.backgroundColor = "#4e545a"
   mic.innerHTML = html
 }
 
@@ -295,6 +294,6 @@ function setPlayVideo() {
 
 function setStopVideo() {
   const html = `<i class="material-icons">videocam</i>`
-  video.style.backgroundColor = "rgb(31, 30, 30)"
+  video.style.backgroundColor = "#4e545a"
   video.innerHTML = html
 }

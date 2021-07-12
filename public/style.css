@@ -28,8 +28,25 @@
 .control-left{
   color: white;
 }
-.control-btn{
-  background-color: rgb(31, 30, 30);
+
+.control-centre{
+  display: flex;
+  flex-direction: row;
+}
+
+.control-right{
+  display: flex;
+  flex-direction: row;
+}
+
+.btn-control{
+  background-color: #4e545a;
+  color:white;
+}
+
+.btn-exit{
+  background-color: red;
+  color: white;
 }
 
 .video-container{
@@ -61,6 +78,18 @@
   justify-content: space-between;
 }
 
+.submit form {
+  display: flex;
+}
+
+.submit input[type='text'] {
+  border-top-style: hidden;
+  border-left-style: hidden;
+  border-right-style: hidden;
+  flex: 1;
+}
+
+
 #msg-input {
   border-top-style: hidden;
   border-left-style: hidden;
@@ -91,7 +120,6 @@
 }
 
 .btn-round{
-  border: 2px solid white;
   justify-content: center;
   border-radius: 49%;
 }

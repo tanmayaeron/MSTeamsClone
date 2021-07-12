@@ -9,6 +9,7 @@
     <script>
         const roomId = "<%= roomId%>"
         const userName = "<%= username%>"
+        
     </script>
 
     <title>Microsoft Teams</title>
@@ -60,9 +61,9 @@
         </div>
 
         <div class="main-center">
-            <form id="enter-meet" action="" method="POST">
-                <input type="hidden" name="roomId" value="">
-                <input type="hidden" name="userName" value="">
+            <form id="enter-meet" action="/video-call" method="POST">
+                <input type="hidden" name="roomId" value="<%= roomId%>">
+                <input type="hidden" name="userName" value="<%= username%>">
                 <button class="btn" id="meet-btn" type="submit">Join Meeting</button>
             </form>
             <div class="btn" id="leave-btn">Exit Room</div>
@@ -72,7 +73,7 @@
             <div class="main-left">
                 <div id="room-id">
                     <div class="head">
-                        <h4><i class="material-icons">meeting_room</i> Room Id:</h4> 
+                        <h4><i class="material-icons">pin</i> Room Id:</h4> 
                     </div>
                     <div class="id-display">
                         <%= roomId%>
@@ -83,27 +84,18 @@
                         <h4><i class="material-icons">groups</i> Participants:</h4>
                     </div>
                     <div class="users-list">
-
                     </div>
                 </div>
             </div>
             <div class="main-right">
                 <div class="msgs">
-                    <div class="single-msg">
-                        <div class="name">
-                            Tanmay
-                        </div>
-                        <div class="text">
-                            Hi!
-                        </div>
-                    </div>
                     <% msgs.forEach((item)=>{%>
                         <div class="single-msg">
                             <div class="name">
-                                <%=item.roomName%>
+                                <%=item.userName%>
                             </div>
                             <div class="text">
-                                <%=item.roomName%>
+                                <%=item.msg%>
                             </div>
                             
                         </div>

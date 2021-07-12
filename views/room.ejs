@@ -7,7 +7,8 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
 
     <script>
-      const ROOM_ID = "<%= roomId %>";
+      const ROOM_ID = "<%= roomId %>"
+      const myName = "<%= userName%>"
     </script>
 
     <script
@@ -63,11 +64,6 @@
               <img src="favicon.ico" height="32vh" />
               Microsoft Teams
             </a>
-            <div class="navbar-nav ml-auto">
-              <button class="btn btn-dark btn-round" id="user">
-                <i class="material-icons">person_outline</i>
-              </button>
-            </div>
           </div>
         </nav>
       </div>
@@ -101,30 +97,30 @@
         <div class="control-left"></div>
 
         <div class="control-centre">
-          <button class="btn btn-secondary btn-round" id="mic">
+          <div class="btn btn-control btn-round" id="mic">
             <i class="material-icons">mic</i>
-          </button>
+          </div>
 
-          <button class="btn btn-secondary btn-round" id="video">
+          <div class="btn btn-control btn-round" id="video">
             <i class="material-icons">videocam</i>
-          </button>
-          <button class="btn btn-secondary btn-round" id="caption">
+          </div>
+          <div class="btn btn-control btn-round" id="caption">
             <i class="material-icons">closed_caption</i>
-          </button>
-          <button class="btn btn-secondary btn-round" id="screenshare">
+          </div>
+          <div class="btn btn-control btn-round" id="screenshare">
             <i class="material-icons">present_to_all</i>
-          </button>
-          <button class="btn btn-danger btn-round" id="call_end">
+          </div>
+          <div class="btn btn-exit btn-round" id="call_end">
             <i class="material-icons">call_end</i>
-          </button>
+          </div>
         </div>
         <div class="control-right">
-          <button class="btn btn-secondary btn-round" id="people_btn">
+          <div class="btn btn-control btn-round" id="people_btn">
             <i class="material-icons">people</i>
-          </button>
-          <button class="btn btn-secondary btn-round" id="msg_btn">
+          </div>
+          <div class="btn btn-control btn-round" id="msg_btn">
             <i class="material-icons">message</i>
-          </button>
+          </div>
         </div>
       </div>
     </div>

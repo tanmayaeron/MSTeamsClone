@@ -49,18 +49,25 @@ app.post('/chat',(req,res)=>{
   if(req.body.type=="enter"){
     if(validator.isUUID(req.body.roomId)==true) {
       
-      const msgs = null
+      var msgs = null
       Room.findOne({
         roomID:req.body.roomId
       }).then(roomExist=>{
         if(roomExist) {
           // room already exists in database
           //update room data
+          console.log('msgs already',roomExist.msgs)
           msgs = roomExist.msgs
-        } else {
 
+          res.render('chat',{
+            roomId:req.body.roomId,
+            username:req.body.user,
+            msgs:msgs
+          })
+
+        } else {
           const newRoom = new Room({
-            roomID: roomId,
+            roomID: req.body.roomId,
             msgs : []
           })
     
@@ -70,17 +77,17 @@ app.post('/chat',(req,res)=>{
             console.log('room could not be created')
           })
           msgs = []
+
+          res.render('chat',{
+            roomId:req.body.roomId,
+            username:req.body.user,
+            msgs:msgs
+          })
+
         }
       }).catch(err=>{
           console.log("error",err)
       })
-
-      res.render('chat',{
-        roomId:req.body.roomId,
-        name:req.body.user,
-        msgs:msgs
-      })
-
     } else {
       res.redirect('/')
     }
@@ -115,11 +122,72 @@ app.post('/chat',(req,res)=>{
   }
 })
 
-app.get('/:room', (req, res) => {
-  res.render('room', { roomId: req.params.room })
+app.post('/video-call', (req, res) => {
+  //roomId userName
+
+  var msgs = null 
+
+  Room.findOne({
+    roomID:req.body.roomId
+  }).then(roomExist=>{
+    if(roomExist) {
+      // room already exists in database
+      //update room data
+      msgs = roomExist.msgs
+
+      res.render('room',{
+        roomId:req.body.roomId,
+        userName:req.body.userName,
+        msgs:msgs
+      })
+
+    } else {
+      console.log('old chats of this room not found')
+    }
+  }).catch(err=>{
+      console.log("error",err)
+  })
 })
 
+var chatUsers = {}
 io.on('connection', socket => {
+
+  socket.on('join-chat-room',(roomId,userName)=>{
+    if(chatUsers[roomId]) {
+      chatUsers[roomId][socket.id] = userName
+    } else {
+      chatUsers[roomId] = {}
+      chatUsers[roomId][socket.id] = userName
+    }
+    socket.join(roomId)
+
+    socket.broadcast.to(roomId).emit('user-joined',socket.id,userName)
+    socket.emit('recieve-users',chatUsers[roomId])
+
+    socket.on('send-msg',data=>{
+
+      //update in database
+      Room.updateOne({
+        roomID:roomId
+      },{
+        $push:{msgs:data} 
+      },{
+        upsert:true
+      },(err,res)=>{
+        if (err) throw err
+        console.log("document updated")
+      })
+
+      io.in(roomId).emit('recieve-msg',data)
+    })
+
+    socket.on('disconnect',()=>{
+      const userId = socket.id
+      if(chatUsers[roomId]&&chatUsers[roomId][userId]) delete chatUsers[roomId][userId]
+      socket.broadcast.to(roomId).emit('user-left',userId)
+    })
+  })
+
   socket.on('join-room', (roomId, userId) => {
     socket.join(roomId)
     socket.broadcast.to(roomId).emit('user-connected', userId)
@@ -134,9 +202,7 @@ io.on('connection', socket => {
           
           //update room data
           const updateMsg = roomExist.msgs
-          console.log(updateMsg)
           updateMsg.push(data)
-          console.log(updateMsg)
           Room.updateOne({roomID:roomId},{$set:{msgs:updateMsg}}, (err,res)=>{
             if (err) throw err
             console.log("document updated")
