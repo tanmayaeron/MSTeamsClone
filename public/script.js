@@ -44,15 +44,20 @@ navigator.mediaDevices.getUserMedia({
 
     conn.on('open', function() {
 
+      const nameDisplay = document.createElement("div")
+
       // Receive data
       conn.on('data', function(data) {
-        users[data.userId] = data.userName
-        const nameDisplay = document.createElement("div")
+        users[data.userId] = {userName:data.userName,connection:conn}
         nameDisplay.innerHTML = data.userName
         people.append(nameDisplay)
       })
 
       //send data
+      conn.on('close',()=>{
+        nameDisplay.remove()
+      })
+
       conn.send({userId:myId,userName:myName})
     })
 
@@ -80,7 +85,14 @@ navigator.mediaDevices.getUserMedia({
 })
 
 socket.on('user-disconnected', userId => {
-  if (peers[userId]) peers[userId].close()
+  if (peers[userId]) {
+    peers[userId].close()
+    delete peers[userId]
+  }
+  if(users[userId]) {
+    users[userId].connection.close()
+    delete users[userId]
+  }
 })
 
 myPeer.on('open', id => {
@@ -109,6 +121,7 @@ video.addEventListener('click',()=>{
     setStopVideo()
   }
 })
+
 
 peopleButton.addEventListener('click',()=>{
   msgBlock.style.display = 'none'
@@ -202,16 +215,18 @@ function connectToNewUser(userId, stream) {
 
   conn.on('open', function() {
     
+    const nameDisplay = document.createElement("div")
     //recive data
     conn.on('data', function(data) {
-      users[data.userId] = data.userName
-      const nameDisplay = document.createElement("div")
+      users[data.userId] = {userName:data.userName,connection:conn}
       nameDisplay.innerHTML = data.userName
       people.append(nameDisplay)
     })
 
+    conn.on('close',()=>{
+      nameDisplay.remove()
+    })
 
-    
     //send data
     conn.send({userId:myId,userName:myName})
   })
