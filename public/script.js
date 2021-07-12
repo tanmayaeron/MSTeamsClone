@@ -209,6 +209,8 @@ function connectToNewUser(userId, stream) {
       nameDisplay.innerHTML = data.userName
       people.append(nameDisplay)
     })
+
+
     
     //send data
     conn.send({userId:myId,userName:myName})

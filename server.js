@@ -143,6 +143,11 @@ app.post('/video-call', (req, res) => {
 
     } else {
       console.log('old chats of this room not found')
+      res.render('room',{
+        roomId:req.body.roomId,
+        userName:req.body.userName,
+        msgs:[]
+      })
     }
   }).catch(err=>{
       console.log("error",err)

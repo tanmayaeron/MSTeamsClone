@@ -99,6 +99,7 @@
 #msgs {
   justify-content: flex-start;
   height: 80%;
+  overflow-y: auto;
 }
 .name {
   font-weight: bold;
