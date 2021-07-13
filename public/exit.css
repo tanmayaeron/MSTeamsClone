@@ -1,0 +1,52 @@
+.main {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    color: white;
+    justify-content: center;
+}
+
+h2 {
+    color: black;
+}
+
+.topbar {
+    height: 100%;
+}
+
+.main__top {
+    height: 10vh;
+    min-height: 10vh;    
+}
+
+.main-center {
+    height: 90vh;
+    min-height: 90vh;
+    display: flex;
+    margin: auto;
+    width: 100%;
+    flex-direction: column;
+    text-align: center;
+    padding: 10%;
+}
+
+/* .center {
+    display: flex;
+    flex-direction: row;
+} */
+
+.btn {
+    border: 2px solid black;
+    border-radius: 5%;
+    margin: 1%;
+}
+
+#rejoin {
+    color: blue;
+}
+
+#home-btn {
+    background-color: blue;
+    color: white;
+}
+

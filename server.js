@@ -40,9 +40,6 @@ app.get('/', (req, res) => {
   res.render('home')
 })
 
-//app.get('/chat',(req,res)=>{
-//  res.render('chat')
-//})
 
 app.post('/chat',(req,res)=>{
   console.log(req.body)
@@ -151,6 +148,14 @@ app.post('/video-call', (req, res) => {
     }
   }).catch(err=>{
       console.log("error",err)
+  })
+})
+
+app.post('/exit',(req,res)=>{
+  console.log(req.body)
+  res.render('exit',{
+    roomId:req.body.roomId,
+    user:req.body.userName
   })
 })
 
