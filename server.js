@@ -155,7 +155,7 @@ app.post('/exit',(req,res)=>{
   console.log(req.body)
   res.render('exit',{
     roomId:req.body.roomId,
-    user:req.body.userName
+    userName:req.body.userName
   })
 })
 
