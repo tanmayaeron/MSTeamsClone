@@ -147,44 +147,6 @@ msgButton.addEventListener('click',()=>{
    }
 })
 
-//message part
-// // input value
-// let text = $("input")
-// // // when press enter send message
-// $('html').keydown(function(e) {
-//     if (e.which == 13 && text.val().length !== 0) {
-//       // const msg = document.createElement("div")
-//       // msg.classList = "msg"
-//       // const name = document.createElement("div")
-//       // name.classList = "name"
-//       // name.innerHTML = "You"
-//       // const msgText = document.createElement("div")
-//       // msgText.classList = "text"
-//       // msgText.innerHTML = text
-//       // msg.append(name)
-//       // msg.append(msgText)
-//       // msgGroup.append(msg)
-//       socket.emit('send-msg',{userName:myName,msg:text})
-//       text.val('')
-//     }
-// });
-
-// sendMsg.addEventListener('click',()=>{
-//   const text = msgInput.nodeValue
-//   if(text){
-//     const msg = document.createElement("div")
-//     msg.classList = "msg"
-//     const name = document.createElement("div")
-//     name.classList = "name"
-//     name.innerHTML = "You"
-//     const msgText = document.createElement("div")
-//     msgText.classList = "text"
-//     msgText.innerHTML = text
-//     msg.append(name)
-//     msg.append(msgText)
-//     socket.emit('send-msg',{userName:myName,msg:text})
-//   }
-// })
 
 chatForm.addEventListener('submit', e => {
   e.preventDefault();

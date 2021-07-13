@@ -50,3 +50,11 @@ body {
     width: 50%;
     border-radius: 5px;
 }
+
+#showenter {
+    cursor: pointer;
+}
+
+#shownew {
+    cursor: pointer;
+}
