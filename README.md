@@ -16,4 +16,4 @@ peerjs --port 3001\
 go to port 3000 of localhost
 
 [Visit website](https://teams-clone-tanmay-aeron.herokuapp.com/)\
-[See video on how to use it](https://drive.google.com/file/d/184WWQjSLi-_n_YoGjYTYca1gFjZfBLzb/view?usp=sharing)
+[See video on how to use it](https://www.youtube.com/watch?v=CGB8E6XUjWg)
