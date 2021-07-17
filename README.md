@@ -6,7 +6,7 @@ Run below commmands to install dependencies\
 npm i express ejs socket.io\
 npm i uuid\
 npm i --save-dev nodemon\
-npm i -g peer
+npm i -g peer\
 npm i mongoose
 
 ## Run on local server
